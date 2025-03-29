@@ -25,7 +25,7 @@ def call(Map config) {
                     dir("${config.serviceDir}") {
                         script {
                             dockerImage = docker.build("${config.imageName}")
-                            docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-creds') {
+                            docker.withRegistry('https://index.docker.io/v1/', 'DockerHub') {
                                 dockerImage.push("${config.tag}")
                             }
                         }
