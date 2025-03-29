@@ -20,14 +20,17 @@ def call(Map config) {
                 }
             }
 
+            
             stage('Package') {
+                when {
+                    expression { env.GIT_BRANCH == 'origin/main' }
+                }
                 steps {
                     dir("${config.serviceDir}") {
-                        script {
-                            dockerImage = docker.build("${config.imageName}")
-                            docker.withRegistry('https://index.docker.io/v1/', 'DockerHub') {
-                                dockerImage.push("${config.tag}")
-                            }
+                        withCredentials([string(credentialsId: 'DockerHub', variable: 'TOKEN')]) {
+                            sh "docker login -u 'nbrar1282' -p '$TOKEN' docker.io"
+                            sh "docker build -t ${config.imageName}:latest --tag ${config.imageName}:${config.tag} ."
+                            sh "docker push ${config.imageName}:${config.tag}"
                         }
                     }
                 }
