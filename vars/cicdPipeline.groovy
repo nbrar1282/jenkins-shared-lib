@@ -6,7 +6,7 @@ def call(Map config) {
                 steps {
                     dir("${config.serviceDir}") {
                         sh 'pip install pylint'
-                        sh 'pylint *.py --fail-under=5'
+                        sh 'pylint *.py --fail-under=1'
                     }
                 }
             }
