@@ -1,6 +1,6 @@
 def call(Map config) {
     pipeline {
-        agent any
+        agent { label 'python_agent' }
         stages {
             stage('Lint') {
                 steps {
