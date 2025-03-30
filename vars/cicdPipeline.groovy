@@ -42,12 +42,17 @@ def call(Map config) {
               }
               steps {
                 sshagent(['ssh-to-3855vm']) {
-                  sh """
-                    ansible-playbook -i /home/azureuser/ansible/inventory.yml /home/azureuser/ansible/deploy_project.yml
-                  """
+                  sh '''
+                    ssh -o StrictHostKeyChecking=no azureuser@acit3855-navdeep.westus.cloudapp.azure.com << 'EOF'
+                      cd /home/ubuntu
+                      docker-compose pull
+                      docker-compose up -d
+                    EOF
+                  '''
                 }
               }
             }
+
         }
 
         parameters {
