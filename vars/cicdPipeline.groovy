@@ -13,8 +13,8 @@ def call(Map config) {
             stage('Security') {
                 steps {
                     dir("${config.serviceDir}") {
-                        sh './venv/bin/pip install bandit'
-                        sh './venv/bin/bandit -r . -x ./venv || true'
+                        sh 'pip install bandit'
+                        sh 'bandit -r . -x ./venv || true'
                     }
                 }
             }
