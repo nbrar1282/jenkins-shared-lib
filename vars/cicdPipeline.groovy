@@ -14,7 +14,7 @@ def call(Map config) {
                 steps {
                     dir("${config.serviceDir}") {
                         sh './venv/bin/pip install bandit'
-                        sh 'bandit -r . || true'
+                        sh './venv/bin/bandit -r . -x ./venv || true'
                     }
                 }
             }
