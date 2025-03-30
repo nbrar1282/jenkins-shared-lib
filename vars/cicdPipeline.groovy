@@ -44,7 +44,7 @@ def call(Map config) {
                 sshagent(['ssh-to-3855vm']) {
                   sh '''
                     ssh -o StrictHostKeyChecking=no ubuntu@acit3855-navdeep.westus.cloudapp.azure.com << 'EOF'
-                      cd /home/ubuntu
+                      cd /home/ubuntu/acit3855-project
                       docker-compose pull
                       docker-compose up -d
                     EOF
