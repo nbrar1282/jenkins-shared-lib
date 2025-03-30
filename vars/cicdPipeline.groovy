@@ -43,7 +43,7 @@ def call(Map config) {
               steps {
                 sshagent(['ssh-to-3855vm']) {
                   sh """
-                  ansible-playbook -i ~/ansible/inventory.yaml ~/ansible/deploy_project.yml
+                    ansible-playbook -i /home/azureuser/ansible/inventory.yaml /home/azureuser/ansible/deploy_project.yml
                   """
                 }
               }
