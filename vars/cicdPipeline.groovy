@@ -48,7 +48,7 @@ def call(Map config) {
                  sh '''
                   python3 -m venv venv
                   ./venv/bin/pip install ansible
-                  ./venv/bin/ansible-playbook -i /home/azureuser/ansible/inventory.yml /home/azureuser/ansible/deploy_project.yml
+                  ANSIBLE_HOST_KEY_CHECKING=False ./venv/bin/ansible-playbook -i /home/azureuser/ansible/inventory.yml /home/azureuser/ansible/deploy_project.yml
                 '''
                 }
               }
