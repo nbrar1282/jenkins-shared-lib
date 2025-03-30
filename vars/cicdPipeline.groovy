@@ -43,11 +43,8 @@ def call(Map config) {
               steps {
                 sshagent(['ssh-to-3855vm']) {
                   sh '''
-                    ssh -o StrictHostKeyChecking=no ubuntu@acit3855-navdeep.westus.cloudapp.azure.com << 'EOF'
-                      cd /home/ubuntu/acit3855-project
-                      docker-compose pull
-                      docker-compose up -d
-                    EOF
+                    ./venv/bin/pip install ansible
+                    venv/bin/ansible-playbook -i /home/jenkins/ansible/inventory.yaml /home/jenkins/ansible/deploy_project.yml
                   '''
                 }
               }
