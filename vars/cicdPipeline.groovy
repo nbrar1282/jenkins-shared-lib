@@ -1,6 +1,9 @@
 def call(Map config) {
     pipeline {
         agent { label 'python_agent' }
+        triggers {
+            githubPush()
+        }
         stages {
             stage('Lint') {
                 steps {
