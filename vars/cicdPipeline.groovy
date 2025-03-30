@@ -42,10 +42,11 @@ def call(Map config) {
               }
               steps {
                 sshagent(['ssh-to-3855vm']) {
-                  sh '''
-                    ./venv/bin/pip install ansible
-                    venv/bin/ansible-playbook -i /home/jenkins/ansible/inventory.yaml /home/jenkins/ansible/deploy_project.yml
-                  '''
+                 sh '''
+                  python3 -m venv venv
+                  ./venv/bin/pip install ansible
+                  ./venv/bin/ansible-playbook -i /home/jenkins/ansible/inventory.yaml /home/jenkins/ansible/deploy_project.yml
+                '''
                 }
               }
             }
