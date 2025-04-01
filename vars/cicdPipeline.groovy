@@ -8,7 +8,7 @@ def call(Map config) {
             stage('Lint') {
                 steps {
                     dir("${config.serviceDir}") {
-                        sh 'pylint *.py --fail-under=1'
+                        sh 'pylint *.py --fail-under=5'
                     }
                 }
             }
