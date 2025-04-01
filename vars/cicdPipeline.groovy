@@ -21,7 +21,7 @@ def call(Map config) {
                             ./venv/bin/pip install bandit
                             ./venv/bin/bandit -r . -x ./venv -f json -o bandit_output.json
             
-                            python3 - <<EOF
+                            python3 - << 'EOF'
             import json
             import sys
             
@@ -34,12 +34,12 @@ def call(Map config) {
             ]
             
             if high_issues:
-                print(f'\\n Found {len(high_issues)} HIGH/CRITICAL issues.')
+                print(f'\\n❌ Found {len(high_issues)} HIGH/CRITICAL issues.')
                 for issue in high_issues:
                     print(f"- {issue['filename']}:{issue['line_number']} {issue['issue_text']}")
                 sys.exit(1)
             else:
-                print('\\n No HIGH/CRITICAL issues found.')
+                print('\\n✅ No HIGH/CRITICAL issues found.')
             EOF
                         '''
                     }
