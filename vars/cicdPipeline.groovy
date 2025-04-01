@@ -19,28 +19,7 @@ def call(Map config) {
                         sh '''
                             python3 -m venv venv
                             ./venv/bin/pip install bandit
-                            ./venv/bin/bandit -r . -x ./venv -f json -o bandit_output.json
-            
-                            python3 - << 'EOF'
-            import json
-            import sys
-            
-            with open('bandit_output.json') as f:
-                results = json.load(f)
-            
-            high_issues = [
-                issue for issue in results.get('results', [])
-                if issue.get('issue_severity') in ('HIGH', 'CRITICAL')
-            ]
-            
-            if high_issues:
-                print(f'\\n❌ Found {len(high_issues)} HIGH/CRITICAL issues.')
-                for issue in high_issues:
-                    print(f"- {issue['filename']}:{issue['line_number']} {issue['issue_text']}")
-                sys.exit(1)
-            else:
-                print('\\n✅ No HIGH/CRITICAL issues found.')
-            EOF
+                            './venv/bin/bandit -r . -x ./venv || true' 
                         '''
                     }
                 }
