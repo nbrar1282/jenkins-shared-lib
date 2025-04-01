@@ -18,22 +18,27 @@ def call(Map config) {
                     dir("${config.serviceDir}") {
                         sh '''
                             ./venv/bin/bandit -r . -x ./venv -f json -o bandit_output.json
-                            python3 -c "
-                        import json, sys
+                            python3 - <<EOF
+                        import json
+                        import sys
+                        
                         with open('bandit_output.json') as f:
                             results = json.load(f)
+                        
                         high_issues = [
                             issue for issue in results.get('results', [])
                             if issue.get('issue_severity') in ('HIGH', 'CRITICAL')
                         ]
+                        
                         if high_issues:
-                            print(f'\\n Found {len(high_issues)} HIGH/CRITICAL issues.')
+                            print(f'\\n❌ Found {len(high_issues)} HIGH/CRITICAL issues.')
                             for i in high_issues:
-                                print(f\"- {i['filename']}:{i['line_number']} {i['issue_text']}\")
+                                print(f"- {i['filename']}:{i['line_number']} {i['issue_text']}")
                             sys.exit(1)
                         else:
-                            print('\\ No HIGH/CRITICAL issues found.')
-                        "'''
+                            print('\\n✅ No HIGH/CRITICAL issues found.')
+                        EOF
+                        '''
                     }
                 }
             }
